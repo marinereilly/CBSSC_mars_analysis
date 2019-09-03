@@ -86,7 +86,7 @@ install.packages("cowplot")
 e<-plot_grid(b,d)
 e
 
-marsh_2m<-st_read("sweethall_2m_marsh.shp")
+marsh_2m<-st_read("data/sweethall_2m_marsh.shp")
 st_geometry(marsh_2m)<-NULL
 marsh_2m<-marsh_2m %>% 
   select(-pointid) %>% 
