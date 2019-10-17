@@ -72,7 +72,8 @@ bigDF_violin
 #
 stats_table<- bigDFb %>%
   group_by(site, method, habitat) %>% 
-  summarise(mean=mean(slope), 
+  summarise(mean=mean(slope),
+            median=median(slope),
             sd=sd(slope),
             min=min(slope),
             max=max(slope),
@@ -81,6 +82,8 @@ stats_table<- bigDFb %>%
             Q3 = quantile(slope, probs=3/4),
             Q1 = quantile(slope, probs=1/4)) %>% 
   arrange(site, habitat, method)
+
+write.csv(stats_table,"slope_stats.csv")
 
 library("htmltools")
 library("webshot")    
@@ -137,6 +140,15 @@ bigDF_nest3<-bigDF_nest2 %>%
                        theme_minimal()
                        ))
 bigDF_nest3$plot[[2]]
+
+if(!dir.exists("./figures")){ #if a figures folder does not exist, create it.
+  dir.create("./figures")
+}
+#use the map function with ggsave to save named figures. 
+dir.create("./figures/slope_plots")
+map2(paste0("./figures/slope_plots/", bigDF_nest3$plot_name, ".jpg"), bigDF_nest3$plot, ggsave)
+
+
 
 bigDF_nest4<-bigDF_nest3 %>% 
   select(plot_name, plot) %>% 
