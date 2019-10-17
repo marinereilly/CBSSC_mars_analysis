@@ -3,6 +3,7 @@ library(broom)
 library(ggplot2)
 library(purrr)
 library(tidyr)
+library(sf)
 
 #load data
 filenames <- list.files("data", pattern="*.shp", full.names = FALSE)
